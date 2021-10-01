@@ -1,10 +1,12 @@
 <template>
 <div>
 
-  <h1>{{id}} {{title}}</h1>
+  <h1>{{id}} - {{title}}</h1>
+  {{image}}
+  <h4>Genre:</h4>
    <div v-for="genre in genres" v-bind:key="genre.id">
     {{genre}} </div>
-    {{rating}}
+  <h4>Rate: {{rating}}</h4>
 
   <br>
      </div>
@@ -14,15 +16,16 @@
     export default {
       name: "Movie",
       props: {
-        "id" : Number,
-        "title": {
+        id : Number,
+        title: {
           String,
           // required:true
         },
-        "genres": Array,
-        "rating": String,
-        "description": String,
-        "review": String,
+        image: Image,
+        genres: Array,
+        rating: Number,
+        description: String,
+        review: String,
 
       }
     }

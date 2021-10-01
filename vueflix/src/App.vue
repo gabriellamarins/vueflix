@@ -63,193 +63,60 @@
       </template>
     </v-select>
 
-            <div v-for="movie in  filtermovies" :key="movie.id">
-              <h1>{{ movie.id }} - {{ movie.title }} </h1>
-              <h3>Genres: <div v-for="genre in movie.genres" v-bind:key="genre.id">
-                {{genre}}</div></h3>
-<!--              <h3>Rate : {{ movie.rating }}</h3>-->
-               <v-rating
-                  v-model="movie.rating"
-                  background-color="orange lighten-3"
-                  color="orange"
-                  large
-              ></v-rating>
-            </div>
-            <br>
-    <h2> There are {{moviesLength}} movies in this list</h2>
-
-<!--            <Movie v-for="movie in movies" v-bind:key="movie.id"-->
-    <Movie />
-<!--            :id="movie.id"-->
-<!--            :title="movie.title"-->
-<!--            :genres="movie.genres"-->
-<!--            :rating="movie.rating"/>-->
-          </div>
+    <Movie v-for="movie in filtermovies" :key="movie.id"
+            :id="movie.id"
+            :title="movie.title"
+            :genres="movie.genres"
+            :rating="movie.rating"/>
+    <h2>  There are {{moviesLength}} movies in this list</h2>
+  </div>
         </v-col>
       </v-row>
     </v-container>
     <br>
 
-    <MovieCreator/>
-
-    <v-container>
-      <h2 class="text-center">Would you like to add a movie to this list?</h2>
-    <validation-observer
-        ref="observer"
-        v-slot="{ invalid }"
-    >
-      <form @submit.prevent="submit">
-        <validation-provider
-            v-slot="{ errors }"
-            name="Name"
-            rules="required"
-        >
-          <v-text-field
-              v-model="add_movie.title"
-              :counter="30"
-              :error-messages="errors"
-              label="Title"
-              required
-          >
-          </v-text-field>
-        </validation-provider>
-
-          <v-checkbox
-              v-model="add_movie.genres"
-              value="Comedy"
-              label="Comedy"
-              type="checkbox"
-          ></v-checkbox>
-          <v-checkbox
-              v-model="add_movie.genres"
-              value="Drama"
-              label="Drama"
-              type="checkbox"
-
-          ></v-checkbox>
-          <v-checkbox
-              v-model="add_movie.genres"
-              value="Thriller"
-              label="Thriller"
-              type="checkbox"
-
-          ></v-checkbox>
-          <v-checkbox
-            v-model="add_movie.genres"
-            value="Adventure"
-            label="Adventure"
-            type="checkbox"
-
-        ></v-checkbox>
-          <v-checkbox
-            v-model="add_movie.genres"
-            value="Action"
-            label="Action"
-            type="checkbox"
-
-        ></v-checkbox>
-          <v-checkbox
-            v-model="add_movie.genres"
-            value="Science-fiction"
-            label="Science-fiction"
-            type="checkbox"
-
-        ></v-checkbox>
-          <v-checkbox
-            v-model="add_movie.genres"
-            value="Fantasy"
-            label="Fantasy"
-            type="checkbox"
-
-        ></v-checkbox>
-
-        <validation-provider
-            v-slot="{ errors }"
-            name="Name"
-            rules="required"
-        >
-          <v-text-field
-              v-model="add_movie.review"
-              :counter="300"
-              :error-messages="errors"
-              label="Your Review"
-              required
-          ></v-text-field>
-        </validation-provider>
-
-        <validation-provider
-            v-slot="{ errors }"
-            name="Name"
-            rules="required"
-        >
-          <v-text-field
-              v-model="add_movie.description"
-              :counter="300"
-              :error-messages="errors"
-              label="Description"
-              required
-          ></v-text-field>
-        </validation-provider>
-
-        <v-rating
-            v-model="add_movie.rating"
-            label="Rate"
-            background-color="orange lighten-3"
-            color="orange"
-            large
-        ></v-rating>
-        <br>
-        <v-btn @click="add"
-            class="mr-4"
-            type="Add"
-            :disabled="invalid"
-        >
-          submit
-        </v-btn>
-        <v-btn @click="clear">
-          clear
-        </v-btn>
-      </form>
-    </validation-observer>
-
-
-    </v-container>
+    <MovieCreation
+                  :movies2 ="movies"
+                  :title="add_movie.title"
+                  :genres="add_movie.genres"
+                  :review="add_movie.review"
+                  :description="add_movie.description"
+                  :rating="add_movie.rating"/>
 
      </v-app>
 </template>
 
 <script>
 import Movie from './components/Movie.vue'
-import { required, digits, email, max, regex } from 'vee-validate/dist/rules'
-import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
-// import MovieCreator from "./components/MovieCreator";
+// import { required, digits, email, max, regex } from 'vee-validate/dist/rules'
+// import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+import MovieCreation from "./components/MovieCreation";
 
-setInteractionMode('eager')
-
-extend('digits', {
-  ...digits,
-  message: '{_field_} needs to be {length} digits. ({_value_})',
-})
-
-extend('required', {
-  ...required,
-  message: '{_field_} can not be empty',
-})
-
-extend('max', {
-  ...max,
-  message: '{_field_} may not be greater than {length} characters',
-})
-
-extend('regex', {
-  ...regex,
-  message: '{_field_} {_value_} does not match {regex}',
-})
-
-extend('email', {
-  ...email,
-  message: 'Email must be valid',
-})
+// setInteractionMode('eager')
+// extend('digits', {
+//   ...digits,
+//   message: '{_field_} needs to be {length} digits. ({_value_})',
+// })
+//
+// extend('required', {
+//   ...required,
+//   message: '{_field_} can not be empty',
+// })
+//
+// extend('max', {
+//   ...max,
+//   message: '{_field_} may not be greater than {length} characters',
+// })
+//
+// extend('regex', {
+//   ...regex,
+//   message: '{_field_} {_value_} does not match {regex}',
+// })
+//
+// extend('email', {
+//   ...email,
+//   message: 'Email must be valid',
+// })
 
 
 
@@ -257,9 +124,9 @@ export default {
   name: 'App',
   components: {
     Movie,
-    // MovieCreator,
-    ValidationProvider,
-    ValidationObserver,
+     MovieCreation,
+    // ValidationProvider,
+    // ValidationObserver,
   },
   data: function () {
     return {
@@ -268,6 +135,7 @@ export default {
       add_movie: {
       // id: 0,
       title: '',
+      image: '',
       genres: [],
       rating: '',
       review: '',
@@ -279,6 +147,7 @@ export default {
         {
           id: 1,
           title: "Parasite",
+          image: "https://img-4.linternaute.com/uVxdFzpRJ56EW2hYBCls8_5O9zE=/405x540/0156050d180a42b2a0cea23c262949e2/ccmcms-linternaute/175577.jpg",
           genres: ["comedy", "drama", "thriller"],
           rating: 9,
           review: "With an insightful and searing exploration of human behavior, ‘Parasite’ is a masterfully crafted film that is a definite must watch.",
@@ -305,28 +174,28 @@ export default {
   },
 
   methods: {
-    add: function () {
-
-      this.movies.push({
-        id: this.movies.length + 1,
-        title: this.add_movie.title,
-        genres: this.add_movie.genres,
-        rating: this.add_movie.rating,
-        review: this.add_movie.review,
-        description: this.add_movie.description
-      });
-    },
-    submit () {
-      this.$refs.observer.validate()
-    },
-    clear () {
-      this.title = ''
-      this.review = ''
-      this.description = ''
-      this.checkbox = null
-      this.rating = null
-      this.$refs.observer.reset()
-    },
+    // add: function () {
+    //
+    //   this.movies.push({
+    //     id: this.movies.length + 1,
+    //     title: this.add_movie.title,
+    //     genres: this.add_movie.genres,
+    //     rating: this.add_movie.rating,
+    //     review: this.add_movie.review,
+    //     description: this.add_movie.description
+    //   });
+    // },
+    // submit () {
+    //   this.$refs.observer.validate()
+    // },
+    // clear () {
+    //   this.title = ''
+    //   this.review = ''
+    //   this.description = ''
+    //   this.checkbox = null
+    //   this.rating = null
+    //   this.$refs.observer.reset()
+    // },
   },
   computed: {
     filtermovies: function () {
