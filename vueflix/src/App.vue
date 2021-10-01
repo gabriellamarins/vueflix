@@ -32,60 +32,68 @@
     </v-app-bar>
 
     <v-main>
-<!--      <HelloWorld/>-->
-          </v-main>
+    </v-main>
 
     <v-container>
       <v-row class="text-center">
-        <v-col cols="10">
+        <v-col cols="12">
           <v-img
               src="./assets/cat_dir.jpg"
               max-height="50%"
               max-width="100%"
               contain
               height="50%"/>
-
          <br>
-         <br>
+  <div>
+  <h2>Filter by Category </h2>
+    <v-select id="filter" v-model="selected"
+        :items="['adventure', 'comedy', 'drama', 'thriller', 'action', 'science-fiction']"
+        label="Genres"
+    >
+      <template v-slot:item="{ item, attrs, on }">
+        <v-list-item
+            v-bind="attrs"
+            v-on="on"
+        >
+          <v-list-item-title
+              :id="attrs['aria-labelledby']"
+              v-text="item"
+          ></v-list-item-title>
+        </v-list-item>
+      </template>
+    </v-select>
 
-          <div>
-
-            <v-card>
-              <v-card-title>
-                Movies
-                <v-spacer></v-spacer>
-                <v-text-field
-                    v-model="search"
-                    append-icon="mdi-magnify"
-                    label="Search"
-                    single-line
-                    hide-details
-                ></v-text-field>
-              </v-card-title>
-              <v-data-table
-                  :headers="headers"
-                  :items="desserts"
-                  :search="search"
-              ></v-data-table>
-            </v-card>
-
-
-            <Movie v-for="movie in movies" v-bind:key="movie.id"
-            :id="movie.id"
-            :title="movie.title"
-            :genres="movie.genres"
-            :rating="movie.rating"
-                              />
-            <h3> Total of Movies in this list: {{movies.length}}</h3>
+            <div v-for="movie in  filtermovies" :key="movie.id">
+              <h1>{{ movie.id }} - {{ movie.title }} </h1>
+              <h3>Genres: <div v-for="genre in movie.genres" v-bind:key="genre.id">
+                {{genre}}</div></h3>
+<!--              <h3>Rate : {{ movie.rating }}</h3>-->
+               <v-rating
+                  v-model="movie.rating"
+                  background-color="orange lighten-3"
+                  color="orange"
+                  large
+              ></v-rating>
+            </div>
             <br>
+    <h2> There are {{moviesLength}} movies in this list</h2>
+
+<!--            <Movie v-for="movie in movies" v-bind:key="movie.id"-->
+    <Movie />
+<!--            :id="movie.id"-->
+<!--            :title="movie.title"-->
+<!--            :genres="movie.genres"-->
+<!--            :rating="movie.rating"/>-->
           </div>
         </v-col>
       </v-row>
     </v-container>
     <br>
-    <br>
-    <br>
-    <br>
+
+    <MovieCreator/>
+
+    <v-container>
+      <h2 class="text-center">Would you like to add a movie to this list?</h2>
     <validation-observer
         ref="observer"
         v-slot="{ invalid }"
@@ -106,16 +114,12 @@
           </v-text-field>
         </validation-provider>
 
-<!--        <validation-provider-->
-<!--            name="checkbox"-->
           <v-checkbox
               v-model="add_movie.genres"
               value="Comedy"
               label="Comedy"
               type="checkbox"
-          >
-
-          </v-checkbox>
+          ></v-checkbox>
           <v-checkbox
               v-model="add_movie.genres"
               value="Drama"
@@ -130,7 +134,34 @@
               type="checkbox"
 
           ></v-checkbox>
-<!--        </validation-provider>-->
+          <v-checkbox
+            v-model="add_movie.genres"
+            value="Adventure"
+            label="Adventure"
+            type="checkbox"
+
+        ></v-checkbox>
+          <v-checkbox
+            v-model="add_movie.genres"
+            value="Action"
+            label="Action"
+            type="checkbox"
+
+        ></v-checkbox>
+          <v-checkbox
+            v-model="add_movie.genres"
+            value="Science-fiction"
+            label="Science-fiction"
+            type="checkbox"
+
+        ></v-checkbox>
+          <v-checkbox
+            v-model="add_movie.genres"
+            value="Fantasy"
+            label="Fantasy"
+            type="checkbox"
+
+        ></v-checkbox>
 
         <validation-provider
             v-slot="{ errors }"
@@ -160,10 +191,17 @@
           ></v-text-field>
         </validation-provider>
 
-
+        <v-rating
+            v-model="add_movie.rating"
+            label="Rate"
+            background-color="orange lighten-3"
+            color="orange"
+            large
+        ></v-rating>
+        <br>
         <v-btn @click="add"
             class="mr-4"
-            type="Add this Movie"
+            type="Add"
             :disabled="invalid"
         >
           submit
@@ -175,7 +213,7 @@
     </validation-observer>
 
 
-
+    </v-container>
 
      </v-app>
 </template>
@@ -184,6 +222,7 @@
 import Movie from './components/Movie.vue'
 import { required, digits, email, max, regex } from 'vee-validate/dist/rules'
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+// import MovieCreator from "./components/MovieCreator";
 
 setInteractionMode('eager')
 
@@ -216,50 +255,23 @@ extend('email', {
 
 export default {
   name: 'App',
-
   components: {
     Movie,
+    // MovieCreator,
     ValidationProvider,
     ValidationObserver,
   },
-
   data: function () {
-
     return {
+      selected: "",
       search: '',
-      headers: [
-        {
-          text: 'Title',
-          align: 'start',
-          sortable: true,
-          value: 'name',
-        },
-        { text: 'Calories', value: 'calories' },
-        { text: 'Fat (g)', value: 'fat' },
-        { text: 'Carbs (g)', value: 'carbs' },
-        { text: 'Protein (g)', value: 'protein' },
-        { text: 'Iron (%)', value: 'iron' },
-      ],
-      desserts: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: '1%',
-        },
-          ],
-
-
-
-
       add_movie: {
+      // id: 0,
       title: '',
       genres: [],
+      rating: '',
       review: '',
       description: '',
-
       checkbox: null,
     },
 
@@ -299,13 +311,11 @@ export default {
         id: this.movies.length + 1,
         title: this.add_movie.title,
         genres: this.add_movie.genres,
-        // rating: this.add_movie.rating,
+        rating: this.add_movie.rating,
         review: this.add_movie.review,
         description: this.add_movie.description
       });
     },
-
-
     submit () {
       this.$refs.observer.validate()
     },
@@ -314,19 +324,30 @@ export default {
       this.review = ''
       this.description = ''
       this.checkbox = null
+      this.rating = null
       this.$refs.observer.reset()
     },
   },
-
-
+  computed: {
+    filtermovies: function () {
+      if (this.selected === "") {
+        return this.movies;
+      } else {
+        return this.movies.filter(movie => movie.genres.includes(this.selected));
+      }
+    },
+    moviesLength: function () {
+      return this.filtermovies.length;
+    },
+  }
 }
-
 
 </script>
 
+<style lang="scss" >
 
+$primary-color: #58079c;
 
-<style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -335,4 +356,12 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+h1{
+  color: $primary-color;
+  &:hover {
+    color: darken($primary-color, 30%);
+  }
+}
+
 </style>

@@ -1,10 +1,11 @@
 <template>
 <div>
 
-  <h1>{{id}} - {{title}}</h1>
-  <li>Genres: <div v-for="genre in genres" v-bind:key="genre.id">
-    {{genre}} </div></li>
-      <li>Rate: {{rating}} </li>
+  <h1>{{id}} {{title}}</h1>
+   <div v-for="genre in genres" v-bind:key="genre.id">
+    {{genre}} </div>
+    {{rating}}
+
   <br>
      </div>
     </template>
@@ -14,9 +15,12 @@
       name: "Movie",
       props: {
         "id" : Number,
-        "title": String,
+        "title": {
+          String,
+          // required:true
+        },
         "genres": Array,
-        "rating": Number,
+        "rating": String,
         "description": String,
         "review": String,
 
