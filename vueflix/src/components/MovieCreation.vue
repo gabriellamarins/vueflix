@@ -57,6 +57,8 @@
 </template>
 
 <script>
+import {EventBus} from "../event-bus";
+
 export default {
   name: "MovieCreation",
   data() {
@@ -78,7 +80,8 @@ export default {
   methods: {
     add_movie_creation() {
       // console.log(this.add_movie)
-      this.$emit('add-movie', this.add_movie)
+      EventBus.$emit('add-movie', this.add_movie)
+      // this.$emit('add-movie', this.add_movie)
       // this.add(this.add_movie)
     },
 

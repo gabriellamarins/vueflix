@@ -78,11 +78,12 @@
 
 
     <MovieCreation
+        EventBus.$on('add-movie')/>
+
+    <!--                  @add-movie="add"-->
 
 
-                  @add-movie="add"
-
-    />
+    
      </v-app>
 </template>
 
@@ -99,8 +100,7 @@ export default {
   data: function () {
     return {
       selected: "",
-      search: '',
-      // add_movie: {
+       // add_movie: {
       //   title: '',
       //   image: '',
       //   genres: [],
