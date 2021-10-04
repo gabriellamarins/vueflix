@@ -63,84 +63,52 @@
       </template>
     </v-select>
 
-    <Movie v-for="movie in filtermovies" :key="movie.id"
+    <Movie v-for="movie in filter_movies" :key="movie.id"
             :id="movie.id"
             :title="movie.title"
             :genres="movie.genres"
             :rating="movie.rating"/>
 
-    <h2>  There are {{moviesLength}} movies in this list</h2>
+    <h2>  There are {{movies_length}} movies in this list</h2>
   </div>
         </v-col>
       </v-row>
     </v-container>
     <br>
 
+
     <MovieCreation
-                  :movies2 ="movies"
-                  :title="add_movie.title"
-                  :genres="add_movie.genres"
-                  :review="add_movie.review"
-                  :description="add_movie.description"
-                  :rating="add_movie.rating"/>
+
+
+                  @add-movie="add"
+
+    />
      </v-app>
 </template>
 
 <script>
 import Movie from './components/Movie.vue'
-// import { required, digits, email, max, regex } from 'vee-validate/dist/rules'
-// import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
 import MovieCreation from "./components/MovieCreation";
-
-// setInteractionMode('eager')
-// extend('digits', {
-//   ...digits,
-//   message: '{_field_} needs to be {length} digits. ({_value_})',
-// })
-//
-// extend('required', {
-//   ...required,
-//   message: '{_field_} can not be empty',
-// })
-//
-// extend('max', {
-//   ...max,
-//   message: '{_field_} may not be greater than {length} characters',
-// })
-//
-// extend('regex', {
-//   ...regex,
-//   message: '{_field_} {_value_} does not match {regex}',
-// })
-//
-// extend('email', {
-//   ...email,
-//   message: 'Email must be valid',
-// })
-
-
 
 export default {
   name: 'App',
   components: {
     Movie,
-     MovieCreation,
-    // ValidationProvider,
-    // ValidationObserver,
+    MovieCreation,
   },
   data: function () {
     return {
       selected: "",
       search: '',
-      add_movie: {
-      title: '',
-      image: '',
-      genres: [],
-      rating: '',
-      review: '',
-      description: '',
-      checkbox: null,
-    },
+      // add_movie: {
+      //   title: '',
+      //   image: '',
+      //   genres: [],
+      //   rating: '',
+      //   review: '',
+      //   description: '',
+      //   checkbox: null,
+      // },
 
       movies: [
         {
@@ -173,41 +141,42 @@ export default {
   },
 
   methods: {
-     // add: function () {
-    //
-    //   this.movies.push({
-    //     id: this.movies.length + 1,
-    //     title: this.add_movie.title,
-    //     genres: this.add_movie.genres,
-    //     rating: this.add_movie.rating,
-    //     review: this.add_movie.review,
-    //     description: this.add_movie.description
-    //   });
-    // },
-    // submit () {
-    //   this.$refs.observer.validate()
-    // },
-    // clear () {
-    //   this.title = ''
-    //   this.review = ''
-    //   this.description = ''
-    //   this.checkbox = null
-    //   this.rating = null
-    //   this.$refs.observer.reset()
-  //   },
+    add: function (newMovie) {
+
+      this.movies.push({
+        id: this.movies.length + 1,
+        title: newMovie.title,
+        genres: newMovie.genres,
+        rating: parseInt(newMovie.rating),
+        review: newMovie.review,
+        description: newMovie.description
+      });
+    },
+    // add : function (add_movie) {
+    //   add_movie.id = this.movies.length +1
+    //   this.movies.push ({
+    //       id: parseInt(add_movie.id),
+    //       title: add_movie.title,
+    //       genres: add_movie.genres,
+    //       rating: add_movie.rating,
+    //       review: add_movie.review,
+    //       description: add_movie.description
+    // })
+    // }
   },
-  computed: {
-    filtermovies: function () {
-      if (this.selected === "") {
-        return this.movies;
-      } else {
-        return this.movies.filter(movie => movie.genres.includes(this.selected));
-      }
-    },
-    moviesLength: function () {
-      return this.filtermovies.length;
-    },
-  }
+    computed: {
+      filter_movies: function () {
+        if (this.selected === "") {
+          return this.movies;
+        } else {
+          return this.movies.filter(movie => movie.genres.includes(this.selected));
+        }
+      },
+      movies_length: function () {
+        return this.filter_movies.length;
+      },
+    }
+
 }
 
 </script>
