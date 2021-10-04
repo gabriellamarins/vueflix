@@ -107,7 +107,8 @@
               large
           ></v-rating>
           <br>
-          <v-btn @click="add()"
+<!--          event @click to trigger the action of the adding function -->
+          <v-btn @click="add(add_movie)"
                  class="mr-4"
                  type="Add"
                  :disabled="invalid"
@@ -164,7 +165,6 @@ export default {
   data() {
     return {
       add_movie: {
-        // id: "",
         title: "",
         genres: [],
         rating: 0,
@@ -180,7 +180,6 @@ export default {
   },
   methods: {
     add: function () {
-
       this.movies2.push({
         id: this.movies2.length + 1,
         title: this.add_movie.title,
@@ -198,7 +197,7 @@ export default {
       this.review = ''
       this.description = ''
       this.checkbox = null
-      this.rating = null
+      this.rating = ''
       this.$refs.observer.reset()
     },
   },

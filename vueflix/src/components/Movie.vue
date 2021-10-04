@@ -7,7 +7,12 @@
    <div v-for="genre in genres" v-bind:key="genre.id">
     {{genre}} </div>
   <h4>Rate: {{rating}}</h4>
-
+  <v-rating
+      v-model="rating"
+      background-color="orange lighten-3"
+      color="orange"
+      large
+  ></v-rating>
   <br>
      </div>
     </template>

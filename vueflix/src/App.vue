@@ -68,6 +68,7 @@
             :title="movie.title"
             :genres="movie.genres"
             :rating="movie.rating"/>
+
     <h2>  There are {{moviesLength}} movies in this list</h2>
   </div>
         </v-col>
@@ -82,7 +83,6 @@
                   :review="add_movie.review"
                   :description="add_movie.description"
                   :rating="add_movie.rating"/>
-
      </v-app>
 </template>
 
@@ -133,7 +133,6 @@ export default {
       selected: "",
       search: '',
       add_movie: {
-      // id: 0,
       title: '',
       image: '',
       genres: [],
@@ -157,7 +156,7 @@ export default {
           id: 2,
           title: "Boyhood",
           genres: ["comedy", "drama", "thriller"],
-          rating: 9,
+          rating: 10,
           review: "With an insightful and searing exploration of human behavior, ‘Parasite’ is a masterfully crafted film that is a definite must watch.",
           description: "Parasite (Korean: 기생충; RR: Gisaengchoong) is a 2019 South Korean black comedy thriller film directed by Bong Joon-ho, who also co-wrote the screenplay with Han Jin-won."
         },
@@ -165,7 +164,7 @@ export default {
           id: 3,
           title: "Francis Ha",
           genres: ["comedy", "drama", "thriller"],
-          rating: 9,
+          rating: 4,
           review: "With an insightful and searing exploration of human behavior, ‘Parasite’ is a masterfully crafted film that is a definite must watch.",
           description: "Parasite (Korean: 기생충; RR: Gisaengchoong) is a 2019 South Korean black comedy thriller film directed by Bong Joon-ho, who also co-wrote the screenplay with Han Jin-won."
         },
@@ -174,7 +173,7 @@ export default {
   },
 
   methods: {
-    // add: function () {
+     // add: function () {
     //
     //   this.movies.push({
     //     id: this.movies.length + 1,
@@ -195,7 +194,7 @@ export default {
     //   this.checkbox = null
     //   this.rating = null
     //   this.$refs.observer.reset()
-    // },
+  //   },
   },
   computed: {
     filtermovies: function () {
