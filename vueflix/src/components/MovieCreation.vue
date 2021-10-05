@@ -67,11 +67,13 @@ export default {
           'Comedy', 'Drama', 'Thriller', 'Adventure', 'Action', 'Science-fiction', 'Fantasy'
       ],
       add_movie: {
+        id: 0,
         title: "",
         genres: [],
         rating: 0,
         review: "",
         description: "",
+
       },
 
 

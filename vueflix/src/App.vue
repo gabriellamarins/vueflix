@@ -78,25 +78,27 @@
 
 
     <MovieCreation
-        EventBus.$on('add-movie')/>
-
-    <!--                  @add-movie="add"-->
 
 
-    
+                      @add-movie="add"/>
+
+
+
      </v-app>
 </template>
+
 
 <script>
 import Movie from './components/Movie.vue'
 import MovieCreation from "./components/MovieCreation";
+import {EventBus} from "./event-bus";
 
 export default {
   name: 'App',
   components: {
     Movie,
     MovieCreation,
-  },
+      },
   data: function () {
     return {
       selected: "",
@@ -150,8 +152,9 @@ export default {
         rating: parseInt(newMovie.rating),
         review: newMovie.review,
         description: newMovie.description
+
       });
-    },
+   },
     // add : function (add_movie) {
     //   add_movie.id = this.movies.length +1
     //   this.movies.push ({
@@ -175,9 +178,16 @@ export default {
       movies_length: function () {
         return this.filter_movies.length;
       },
+    },
+    mounted() {
+    EventBus.$on('add-movie',(el) => {
+      this.add(el)
+      console.log(el)
+    })
     }
-
 }
+
+
 
 </script>
 
