@@ -21,6 +21,7 @@
     export default {
       name: "Movie",
       props: {
+
         id : Number,
         title: {
           String,

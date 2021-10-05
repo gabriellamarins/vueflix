@@ -87,17 +87,6 @@ export default {
       // this.add(this.add_movie)
     },
 
-
-    // add: function () {
-    //   this.movies2.push({
-    //     id: this.movies2.length + 1,
-    //     title: this.add_movie.title,
-    //     genres: this.add_movie.genres,
-    //     rating: this.add_movie.rating,
-    //     review: this.add_movie.review,
-    //     description: this.add_movie.description
-    //   });
-    // },
   },
 
   // props: {
