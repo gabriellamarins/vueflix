@@ -1,6 +1,9 @@
 <template>
 <div>
-
+  <br>
+  <br>
+<h1 style="font-family:Roboto; color:cornflowerblue">The most miaawwsome movie reviewer of the internet </h1>
+ <br>
   <v-container>
     <v-row class="text-center">
       <v-col cols="12">
@@ -40,10 +43,13 @@
         </div>
       </v-col>
     </v-row>
+
+
+    <router-link :to="{name:'movie_id', params:{id:movies.id}}"></router-link>
     <router-view></router-view>
   </v-container>
 <br>
-  <MovieCreation @add-movie="add"/>
+<!--  <MovieCreation @add-movie="add"/>-->
 
 </div>
 </template>
@@ -52,14 +58,14 @@
 
 
 import Movie from "./Movie";
-import MovieCreation from "./MovieCreation";
+// import MovieCreation from "./MovieCreation";
 import {EventBus} from "../event-bus";
 
 export default {
   name: "Home",
   components: {
     Movie,
-    MovieCreation,
+    // MovieCreation,
   },
   data: function () {
     return {

@@ -41,6 +41,9 @@
       </div>
     </v-app-bar>
 
+
+<!--<router-link :to="{name:'movie_id', params:{id:movies.id}}"></router-link>-->
+
       <router-view></router-view>
 
   </v-app>
@@ -49,15 +52,15 @@
 
 
 <script>
-// import Movie from './components/Movie.vue'
 // import MovieCreation from "./components/MovieCreation";
 import {EventBus} from "./event-bus";
+
 
 
 export default {
   name: 'App',
   components: {
-    // Movie,
+
     // MovieCreation,
   },
   data: function () {
