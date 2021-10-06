@@ -2,12 +2,12 @@
 <div>
   <br>
   <br>
-<h1 style="font-family:Roboto; color:cornflowerblue">The most miaawwsome movie reviewer of the internet </h1>
- <br>
-  <v-container>
+<h1 style="font-family:Roboto,sans-serif; color:cornflowerblue">The most miaawwsome movie reviewer of the internet </h1>
+
+  <v-container class="cont_filter">
     <v-row class="text-center">
       <v-col cols="12">
-        <v-img
+        <v-img class="cat"
             src="../assets/cat_dir.jpg"
             max-height="50%"
             max-width="100%"
@@ -32,21 +32,29 @@
               </v-list-item>
             </template>
           </v-select>
-
-          <Movie v-for="movie in filter_movies" :key="movie.id"
-                 :id="movie.id"
-                 :title="movie.title"
-                 :genres="movie.genres"
-                 :rating="movie.rating"/>
-
+          <div v-for="movie in filter_movies" :key="movie.id">
+            <router-link :to="{name:'movie_id', params:{id:movie.id, movie:movie}}" style="text-decoration: none">
+              <h1>{{movie.id}} - {{movie.title}}</h1>
+            </router-link>
+            <img :src="movie.image" alt="x" style="width: 50%" height="50%">
+            <h4>Genre:</h4>
+            <div v-for="genre in movie.genres" v-bind:key="genre.id">
+              {{genre}} </div>
+            <h4>Rate: {{movie.rating}}</h4>
+            <v-rating
+                v-model="movie.rating"
+                background-color="orange lighten-3"
+                color="orange"
+                large
+            ></v-rating>
+          </div>
           <h2> There are {{ movies_length }} movies in this list</h2>
         </div>
       </v-col>
     </v-row>
 
-
-    <router-link :to="{name:'movie_id', params:{id:movies.id}}"></router-link>
     <router-view></router-view>
+
   </v-container>
 <br>
 <!--  <MovieCreation @add-movie="add"/>-->
@@ -55,35 +63,20 @@
 </template>
 
 <script>
-
-
-import Movie from "./Movie";
-// import MovieCreation from "./MovieCreation";
 import {EventBus} from "../event-bus";
 
 export default {
   name: "Home",
   components: {
-    Movie,
-    // MovieCreation,
   },
   data: function () {
     return {
       selected: "",
-      // add_movie: {
-      //   title: '',
-      //   image: '',
-      //   genres: [],
-      //   rating: '',
-      //   review: '',
-      //   description: '',
-      //   checkbox: null,
-      // },
       movies: [
         {
           id: 1,
           title: "Parasite",
-          image: "https://img-4.linternaute.com/uVxdFzpRJ56EW2hYBCls8_5O9zE=/405x540/0156050d180a42b2a0cea23c262949e2/ccmcms-linternaute/175577.jpg",
+          image: "https://www.grignoux.be/upload/grignoux/films/844/parasite_oscarrr.jpg",
           genres: ["comedy", "drama", "thriller"],
           rating: 9,
           review: "With an insightful and searing exploration of human behavior, ‘Parasite’ is a masterfully crafted film that is a definite must watch.",
@@ -92,6 +85,7 @@ export default {
         {
           id: 2,
           title: "Boyhood",
+          image: "https://retourverslecinema.com/wp-content/uploads/2014/07/boyhood.jpg",
           genres: ["comedy", "drama", "thriller"],
           rating: 10,
           review: "With an insightful and searing exploration of human behavior, ‘Parasite’ is a masterfully crafted film that is a definite must watch.",
@@ -100,6 +94,7 @@ export default {
         {
           id: 3,
           title: "Francis Ha",
+          image: "https://thecinephiliac.files.wordpress.com/2014/11/frances-ha-poster.jpg",
           genres: ["comedy", "drama", "thriller"],
           rating: 4,
           review: "With an insightful and searing exploration of human behavior, ‘Parasite’ is a masterfully crafted film that is a definite must watch.",
@@ -165,6 +160,15 @@ h1 {
   &:hover {
     color: darken($primary-color, 30%);
   }
+}
+
+.cat {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.cont_filter {
+  margin-top: 0;
 }
 
 </style>

@@ -17,11 +17,11 @@ Vue.config.productionTip = false
 
 const routes = [ //aqui entram todas as rotas
   { path: '/', name:'home',component: Home, props: true },
-  // { path: '/movie', name:'Movie',component: Movie },
+  // { path: '/movie', name:'movie',component: Movie, props: true },
   { path: '/admin', name: 'MovieCreation', component: MovieCreation},
   { path: '/navbar', name: 'navbar', component: NavBar},
   { path: '/movie/:id', name: 'movie_id', component: Movie, props: true},
-  { path: '/navbar', name: 'movieslist', component: MoviesList},
+  { path: '/movieslist', name: 'movieslist', component: MoviesList},
 ]
 
 const router = new VueRouter({
@@ -36,6 +36,8 @@ new Vue({
   vuetify,
   render: h => h(App)
 }).$mount('#app')
+
+
 
 
 

@@ -29,13 +29,13 @@
         <v-btn
             target="_blank"
             text>
-          <router-link :to="{name: 'home'}"><span class="mr-2" style="color: white">HOME</span></router-link>
+          <router-link :to="{name: 'home'}" style="text-decoration: none"><span class="mr-2" style="color: white">HOME</span></router-link>
 
         </v-btn>
         <v-btn
             target="_blank"
             text>
-          <router-link :to="{name: 'MovieCreation'}"><span class="mr-2" style="color: white">ADMIN</span></router-link>
+          <router-link :to="{name: 'MovieCreation'}" style="text-decoration: none"><span class="mr-2" style="color: white">ADMIN</span></router-link>
 
         </v-btn>
       </div>
@@ -53,7 +53,7 @@
 
 <script>
 // import MovieCreation from "./components/MovieCreation";
-import {EventBus} from "./event-bus";
+// import {EventBus} from "./event-bus";
 
 
 
@@ -65,6 +65,7 @@ export default {
   },
   data: function () {
     return {
+      test: 'testeeeee',
       selected: "",
       // add_movie: {
       //   title: '',
@@ -119,6 +120,38 @@ export default {
       });
     },
   },
+
+  beforeCreate() {
+    console.log('before created')
+    console.log(this.test)
+    console.log(this.$el)
+  },
+created () {
+    console.log('created')
+  console.log(this.test)
+  console.log(this.$el)
+},
+beforeMount() { //ici on commence a avoir accès au DOM
+    console.log('before mount')
+  console.log(this.test)
+  console.log(this.$el)
+},
+mounted() {
+    console.log('mounted')
+  console.log(this.test)
+  console.log(this.$el)
+},
+  beforeUpdate() {
+    console.log('before update')
+
+  },
+  updated() {
+    console.log('updated')
+
+  },
+
+
+
   computed: {
     filter_movies: function () {
       if (this.selected === "") {
@@ -131,12 +164,12 @@ export default {
       return this.filter_movies.length;
     },
   },
-  mounted() {
-    EventBus.$on('add-movie', (el) => {
-      this.add(el)
-      console.log(el)
-    })
-  }
+  // mounted() {
+  //   EventBus.$on('add-movie', (el) => {
+  //     this.add(el)
+  //     console.log(el)
+  //   })
+  // }
 }
 
 
