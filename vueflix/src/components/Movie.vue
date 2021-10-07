@@ -34,8 +34,7 @@
         // rating: Number,
         // description: String,
         // review: String,
-
-      }
+      },
     }
     </script>
 

@@ -171,4 +171,11 @@ h1 {
   margin-top: 0;
 }
 
+
+.add_movie {
+  color: $primary-color;
+}
+
+
+
 </style>

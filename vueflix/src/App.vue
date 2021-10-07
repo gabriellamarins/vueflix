@@ -53,7 +53,7 @@
 
 <script>
 // import MovieCreation from "./components/MovieCreation";
-// import {EventBus} from "./event-bus";
+import {EventBus} from "./event-bus";
 
 
 
@@ -121,34 +121,34 @@ export default {
     },
   },
 
-  beforeCreate() {
-    console.log('before created')
-    console.log(this.test)
-    console.log(this.$el)
-  },
-created () {
-    console.log('created')
-  console.log(this.test)
-  console.log(this.$el)
-},
-beforeMount() { //ici on commence a avoir accès au DOM
-    console.log('before mount')
-  console.log(this.test)
-  console.log(this.$el)
-},
-mounted() {
-    console.log('mounted')
-  console.log(this.test)
-  console.log(this.$el)
-},
-  beforeUpdate() {
-    console.log('before update')
-
-  },
-  updated() {
-    console.log('updated')
-
-  },
+//   beforeCreate() {
+//     console.log('before created')
+//     console.log(this.test)
+//     console.log(this.$el)
+//   },
+// created () {
+//     console.log('created')
+//   console.log(this.test)
+//   console.log(this.$el)
+// },
+// beforeMount() { //ici on commence a avoir accès au DOM
+//     console.log('before mount')
+//   console.log(this.test)
+//   console.log(this.$el)
+// },
+// mounted() {
+//     console.log('mounted')
+//   console.log(this.test)
+//   console.log(this.$el)
+// },
+//   beforeUpdate() {
+//     console.log('before update')
+//
+//   },
+//   updated() {
+//     console.log('updated')
+//
+//   },
 
 
 
@@ -164,12 +164,12 @@ mounted() {
       return this.filter_movies.length;
     },
   },
-  // mounted() {
-  //   EventBus.$on('add-movie', (el) => {
-  //     this.add(el)
-  //     console.log(el)
-  //   })
-  // }
+  mounted() {
+    EventBus.$on('add-movie', (el) => {
+      this.add(el)
+      console.log(el)
+    })
+  }
 }
 
 

@@ -1,15 +1,44 @@
 <template>
 
-    <v-container>
-      <h2 class="text-center">Would you like to add a movie to this list?</h2>
-        <div>
+    <v-container class="add_movie">
+      <br>
+      <br>
+      <h2 class="text-center" >Would you like to add a movie to this list?</h2>
+      <br>
+      <div>
+          <v-text-field
+              v-model="add_movie.id"
+              :counter="30"
+              label="Movie Id"
+              required
+              @keyup="getResult"
+          >
+          </v-text-field>
+
+
             <v-text-field
                 v-model="add_movie.title"
                 :counter="30"
                 label="Title"
                 required
+
             >
             </v-text-field>
+
+        <v-autocomplete
+
+
+          v-model="add_movie"
+          :items="gettingmovies"
+          item-text="title"
+          :counter="30"
+          label="Title"
+
+          solo
+          return-object
+          >
+        </v-autocomplete>
+
 
           <v-checkbox v-for="genre in genres" :key="genre"
               v-model="add_movie.genres"
@@ -57,6 +86,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import {EventBus} from "../event-bus";
 
 export default {
@@ -74,6 +104,9 @@ export default {
         review: "",
         description: "",
 
+        original_title: "",
+        gettingmovies: [],
+
       },
 
 
@@ -87,6 +120,22 @@ export default {
       // this.add(this.add_movie)
     },
 
+    getResult () {
+console.log(this.add_movie)
+      this.gettingmovies = [];
+
+      if (this.add_movie.title !== "") {
+      axios
+      .get('https://api.themoviedb.org/3/search/movie?api_key=80d0dd074cbffeb2db4b0123882c7f44&query=' + this.add_movie.title)
+      .then (response => {
+        console.log(response.data.results)
+
+        this.gettingmovies = response.data.results;
+      })
+          .catch(function (error) {
+            this.error = error;
+          })
+    }
   },
 
   // props: {
@@ -94,6 +143,8 @@ export default {
   //   add: Function,
   //
   // },
-}
+}}
 
 </script>
+
+
