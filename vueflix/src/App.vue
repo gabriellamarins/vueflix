@@ -29,25 +29,22 @@
         <v-btn
             target="_blank"
             text>
-          <router-link :to="{name: 'home'}" style="text-decoration: none"><span class="mr-2" style="color: white">HOME</span></router-link>
-
+          <router-link :to="{name: 'home', params: {movies: movies}}" style="text-decoration: none"><span class="mr-2" style="color: white">HOME</span></router-link>
         </v-btn>
+
         <v-btn
             target="_blank"
             text>
           <router-link :to="{name: 'MovieCreation'}" style="text-decoration: none"><span class="mr-2" style="color: white">ADMIN</span></router-link>
-
         </v-btn>
       </div>
     </v-app-bar>
 
-
 <!--<router-link :to="{name:'movie_id', params:{id:movies.id}}"></router-link>-->
 
-      <router-view></router-view>
+  <router-view></router-view>
 
   </v-app>
-
 </template>
 
 
@@ -55,18 +52,14 @@
 // import MovieCreation from "./components/MovieCreation";
 import {EventBus} from "./event-bus";
 
-
-
 export default {
   name: 'App',
   components: {
-
     // MovieCreation,
   },
   data: function () {
     return {
-      test: 'testeeeee',
-      selected: "",
+      // selected: "",
       // add_movie: {
       //   title: '',
       //   image: '',
@@ -80,7 +73,7 @@ export default {
         {
           id: 1,
           title: "Parasite",
-          image: "https://img-4.linternaute.com/uVxdFzpRJ56EW2hYBCls8_5O9zE=/405x540/0156050d180a42b2a0cea23c262949e2/ccmcms-linternaute/175577.jpg",
+          image: "https://www.grignoux.be/upload/grignoux/films/844/parasite_oscarrr.jpg",
           genres: ["comedy", "drama", "thriller"],
           rating: 9,
           review: "With an insightful and searing exploration of human behavior, ‘Parasite’ is a masterfully crafted film that is a definite must watch.",
@@ -89,7 +82,8 @@ export default {
         {
           id: 2,
           title: "Boyhood",
-          genres: ["comedy", "drama", "thriller"],
+          image: "https://retourverslecinema.com/wp-content/uploads/2014/07/boyhood.jpg",
+          genres: ["comedy", "drama"],
           rating: 10,
           review: "With an insightful and searing exploration of human behavior, ‘Parasite’ is a masterfully crafted film that is a definite must watch.",
           description: "Parasite (Korean: 기생충; RR: Gisaengchoong) is a 2019 South Korean black comedy thriller film directed by Bong Joon-ho, who also co-wrote the screenplay with Han Jin-won."
@@ -97,30 +91,34 @@ export default {
         {
           id: 3,
           title: "Francis Ha",
-          genres: ["comedy", "drama", "thriller"],
+          image: "https://thecinephiliac.files.wordpress.com/2014/11/frances-ha-poster.jpg",
+          genres: ["comedy", "drama"],
           rating: 4,
           review: "With an insightful and searing exploration of human behavior, ‘Parasite’ is a masterfully crafted film that is a definite must watch.",
           description: "Parasite (Korean: 기생충; RR: Gisaengchoong) is a 2019 South Korean black comedy thriller film directed by Bong Joon-ho, who also co-wrote the screenplay with Han Jin-won."
         },
-      ]
-    };
+      ],
+      genres: ['action', 'comedy', 'animation', 'romance', 'drama', 'thriller', 'science fiction', 'mystery', 'adventure', 'family', 'music', 'horror', 'crime','documentary','fantasy', 'history', 'TV movie', 'war', 'western'],
+      show: true,
+    }
   },
 
   methods: {
-    add: function (newMovie) {
+    add: function (add_movie) {
 
       this.movies.push({
-        id: this.movies.length + 1,
-        title: newMovie.title,
-        genres: newMovie.genres,
-        rating: parseInt(newMovie.rating),
-        review: newMovie.review,
-        description: newMovie.description
-
+        // id: this.movies.length + 1,
+        id: parseInt(add_movie.id),
+        title: add_movie.title,
+        genres: add_movie.genre_ids,
+        rating: parseInt(add_movie.vote_average),
+        review: add_movie.overview,
+        // description: add_movie.description
       });
-    },
+      this.$router.push({
+        name: 'Home', params: {movies: this.movies}
+      })
   },
-
 //   beforeCreate() {
 //     console.log('before created')
 //     console.log(this.test)
@@ -150,29 +148,27 @@ export default {
 //
 //   },
 
-
-
-  computed: {
-    filter_movies: function () {
-      if (this.selected === "") {
-        return this.movies;
-      } else {
-        return this.movies.filter(movie => movie.genres.includes(this.selected));
-      }
-    },
-    movies_length: function () {
-      return this.filter_movies.length;
-    },
+    // computed: {
+    //   filter_movies: function () {
+    //     if (this.selected === "") {
+    //       return this.movies;
+    //     } else {
+    //       return this.movies.filter(movie => movie.genres.includes(this.selected));
+    //     }
+    //   },
+    //   movies_length: function () {
+    //     return this.filter_movies.length;
+    //   },
+    // },
   },
+
   mounted() {
-    EventBus.$on('add-movie', (el) => {
-      this.add(el)
-      console.log(el)
+    EventBus.$on('add-movie', (data) => {
+      this.add(data)
+      console.log(data)
     })
   }
-}
-
-
+  }
 </script>
 
 <style lang="scss">

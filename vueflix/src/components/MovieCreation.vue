@@ -11,10 +11,8 @@
               :counter="30"
               label="Movie Id"
               required
-
           >
           </v-text-field>
-
 
           <v-text-field
                 v-model="add_movie.title"
@@ -26,27 +24,29 @@
           </v-text-field>
 
         <v-autocomplete
-
-
           v-model="add_movie"
           :items="getting_movies"
           item-text="title"
           :counter="100"
           label="Title"
-
           solo
           return-object
           >
         </v-autocomplete>
 
-    <div v-for="genre in genres_api" :key="genre.id">
+        <v-img
+            v-model="add_movie.poster_path"
+            :label="add_movie.poster_path"
+            required
+        ></v-img>
 
+
+    <div v-for="genre in genres_api" :key="genre.id">
           <v-checkbox
               v-model="add_movie.genre_ids"
               :value="genre.id"
               :label="genre.name">
           </v-checkbox>
-
       </div>
 
             <v-text-field
@@ -56,13 +56,12 @@
                 required
             ></v-text-field>
 
-
-            <v-text-field
-                v-model="add_movie.description"
-                :counter="400"
-                label="Description"
-                required
-            ></v-text-field>
+<!--            <v-text-field-->
+<!--                v-model="add_movie.description"-->
+<!--                :counter="400"-->
+<!--                label="Description"-->
+<!--                required-->
+<!--            ></v-text-field>-->
 
           <v-rating
               v-model="add_movie.vote_average"
@@ -84,12 +83,8 @@
 
 <!--<div v-for="movie in add_movie" :key="movie">-->
 <!--  {{movie.id}} - {{movie.title}}-->
-
-
-
 <!--</div>-->
     </v-container>
-
 </template>
 
 <script>
@@ -102,7 +97,6 @@ export default {
     // movies2: Array,
     add: Function,
   },
-
   data() {
     return {
       // genres: [
@@ -120,9 +114,9 @@ export default {
         overview: "",
         description: "",
         original_title: "",
+        poster_path:"",
       },
       show: true,
-
     }
   },
   methods: {
@@ -167,11 +161,9 @@ export default {
     },
   },
 
-
   mounted() {
     this.getGenres()
   }
-
 }
 
 </script>
