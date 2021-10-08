@@ -11,27 +11,27 @@
               :counter="30"
               label="Movie Id"
               required
-              @keyup="getResult"
+
           >
           </v-text-field>
 
 
-            <v-text-field
+          <v-text-field
                 v-model="add_movie.title"
                 :counter="30"
-                label="Title"
+                label="title"
                 required
-
-            >
-            </v-text-field>
+                @keyup="getResult()"
+           >
+          </v-text-field>
 
         <v-autocomplete
 
 
           v-model="add_movie"
-          :items="gettingmovies"
+          :items="getting_movies"
           item-text="title"
-          :counter="30"
+          :counter="100"
           label="Title"
 
           solo
@@ -39,36 +39,38 @@
           >
         </v-autocomplete>
 
+    <div v-for="genre in genres_api" :key="genre.id">
 
-          <v-checkbox v-for="genre in genres" :key="genre"
-              v-model="add_movie.genres"
-              :value="genre"
-              :label="genre"
-              type="checkbox"
-          ></v-checkbox>
+          <v-checkbox
+              v-model="add_movie.genre_ids"
+              :value="genre.id"
+              :label="genre.name">
+          </v-checkbox>
 
+      </div>
 
             <v-text-field
-                v-model="add_movie.review"
+                v-model="add_movie.overview"
                 :counter="300"
-                label="Your Review"
+                label="Review"
                 required
             ></v-text-field>
 
 
             <v-text-field
                 v-model="add_movie.description"
-                :counter="300"
+                :counter="400"
                 label="Description"
                 required
             ></v-text-field>
 
           <v-rating
-              v-model="add_movie.rating"
+              v-model="add_movie.vote_average"
               label="Rate"
               background-color="orange lighten-3"
               color="orange"
               large
+              length="10"
           ></v-rating>
           <br>
 <!--          event @click to trigger the action of the adding function -->
@@ -80,7 +82,12 @@
           </v-btn>
         </div>
 
+<!--<div v-for="movie in add_movie" :key="movie">-->
+<!--  {{movie.id}} - {{movie.title}}-->
 
+
+
+<!--</div>-->
     </v-container>
 
 </template>
@@ -91,24 +98,30 @@ import {EventBus} from "../event-bus";
 
 export default {
   name: "MovieCreation",
+  props: {
+    // movies2: Array,
+    add: Function,
+  },
+
   data() {
     return {
-      genres: [
-          'Comedy', 'Drama', 'Thriller', 'Adventure', 'Action', 'Science-fiction', 'Fantasy'
-      ],
+      // genres: [
+      //     'Comedy', 'Drama', 'Thriller', 'Adventure', 'Action', 'Science-fiction', 'Fantasy'
+      // ],
+      errors: null,
+      loading: false,
+      getting_movies: [],
+      genres_api: [],
       add_movie: {
         id: 0,
         title: "",
-        genres: [],
-        rating: 0,
-        review: "",
+        genre_ids: [],
+        vote_average: 0,
+        overview: "",
         description: "",
-
         original_title: "",
-        gettingmovies: [],
-
       },
-
+      show: true,
 
     }
   },
@@ -120,30 +133,46 @@ export default {
       // this.add(this.add_movie)
     },
 
-    getResult () {
-console.log(this.add_movie)
-      this.gettingmovies = [];
+    getResult() {
+      console.log(this.add_movie)
+      this.loading = true;
+      this.getting_movies = [];
 
       if (this.add_movie.title !== "") {
-      axios
-      .get('https://api.themoviedb.org/3/search/movie?api_key=80d0dd074cbffeb2db4b0123882c7f44&query=' + this.add_movie.title)
-      .then (response => {
-        console.log(response.data.results)
+        axios
+            .get('https://api.themoviedb.org/3/search/movie?api_key=80d0dd074cbffeb2db4b0123882c7f44&query=""' + this.add_movie.title)
+            .then(response => {
+              console.log(response.data.results)
 
-        this.gettingmovies = response.data.results;
-      })
-          .catch(function (error) {
-            this.error = error;
+              this.getting_movies = response.data.results;
+            })
+            .catch(function (error) {
+              this.error = error;
+              console.log(error);
+            })
+      }
+    },
+
+    getGenres() {
+      this.genres_api = [];
+      axios
+          .get('https://api.themoviedb.org/3/genre/movie/list?api_key=80d0dd074cbffeb2db4b0123882c7f44&language=en-US')
+          .then(response => {
+            console.log(response.data.genres)
+            this.genres_api = response.data.genres
           })
-    }
+          .catch(function (error) {
+            console.log(error);
+          })
+    },
   },
 
-  // props: {
-  //   // movies2: Array,
-  //   add: Function,
-  //
-  // },
-}}
+
+  mounted() {
+    this.getGenres()
+  }
+
+}
 
 </script>
 

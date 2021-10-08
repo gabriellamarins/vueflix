@@ -64,10 +64,12 @@
 
 <script>
 import {EventBus} from "../event-bus";
+// import MovieCreation from "./MovieCreation";
 
 export default {
   name: "Home",
   components: {
+    // MovieCreation
   },
   data: function () {
     return {
@@ -100,7 +102,8 @@ export default {
           review: "With an insightful and searing exploration of human behavior, ‘Parasite’ is a masterfully crafted film that is a definite must watch.",
           description: "Parasite (Korean: 기생충; RR: Gisaengchoong) is a 2019 South Korean black comedy thriller film directed by Bong Joon-ho, who also co-wrote the screenplay with Han Jin-won."
         },
-      ]
+      ],
+      show: true,
     };
   },
 
