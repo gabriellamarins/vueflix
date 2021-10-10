@@ -1,6 +1,10 @@
 <template>
 
     <v-container class="add_movie">
+
+
+
+
       <br>
       <br>
       <h2 class="text-center" >Would you like to add a movie to this list?</h2>
@@ -163,7 +167,30 @@ export default {
 
   mounted() {
     this.getGenres()
+  },
+
+  nombreFilm: function () {
+    return this.filteredFilms.length
+  },
+
+//botar isso no template
+//<p><strong> Nombre de films dans la liste:</strong> {{ films.length }}</p>
+//<p><strong> Nombre de films sélectionnés:</strong> {{ nombreFilm }}</p>
+
+
+  watch: {
+    nombreFilm: function (nouvelle_val, ancienne_val) {
+      if (nouvelle_val > ancienne_val) {
+        alert('valeur changée!')
+      }
+    },
+
   }
+
+
+
+
+
 }
 
 </script>
