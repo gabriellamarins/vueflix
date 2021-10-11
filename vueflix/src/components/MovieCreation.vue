@@ -9,6 +9,12 @@
       <br>
       <h2 class="text-center" >Would you like to add a movie to this list?</h2>
       <br>
+
+      <v-text-field type = "text" v-model = "teste">
+<!--      <h2><input type = "text" v-model = "teste" style="border: #000088"></h2>-->
+      </v-text-field>
+<br>
+
       <div>
           <v-text-field
               v-model="add_movie.id"
@@ -60,13 +66,6 @@
                 required
             ></v-text-field>
 
-<!--            <v-text-field-->
-<!--                v-model="add_movie.description"-->
-<!--                :counter="400"-->
-<!--                label="Description"-->
-<!--                required-->
-<!--            ></v-text-field>-->
-
           <v-rating
               v-model="add_movie.vote_average"
               label="Rate"
@@ -84,10 +83,6 @@
             submit
           </v-btn>
         </div>
-
-<!--<div v-for="movie in add_movie" :key="movie">-->
-<!--  {{movie.id}} - {{movie.title}}-->
-<!--</div>-->
     </v-container>
 </template>
 
@@ -103,9 +98,8 @@ export default {
   },
   data() {
     return {
-      // genres: [
-      //     'Comedy', 'Drama', 'Thriller', 'Adventure', 'Action', 'Science-fiction', 'Fantasy'
-      // ],
+      teste: "",
+      teste2: 0,
       errors: null,
       loading: false,
       getting_movies: [],
@@ -118,7 +112,7 @@ export default {
         overview: "",
         description: "",
         original_title: "",
-        poster_path:"",
+        poster_path: "",
       },
       show: true,
     }
@@ -169,29 +163,39 @@ export default {
     this.getGenres()
   },
 
-  nombreFilm: function () {
-    return this.filteredFilms.length
-  },
-
-//botar isso no template
-//<p><strong> Nombre de films dans la liste:</strong> {{ films.length }}</p>
-//<p><strong> Nombre de films sélectionnés:</strong> {{ nombreFilm }}</p>
-
 
   watch: {
-    nombreFilm: function (nouvelle_val, ancienne_val) {
-      if (nouvelle_val > ancienne_val) {
-        alert('valeur changée!')
+
+    // teste: function (val ) {
+    //    this.teste = val;
+    //    console.log(val)
+    //   this.teste2 = val * 100;
+    //   // if (val > val2) {
+    //   //   alert('valeur changée!')
+    //   // }
+    //
+    // },
+
+    teste: function (val ) {
+      this.teste = val;
+      console.log(val)
+      if (val === 'No' || val === 'no') {
+        alert('Are you sure?')
+      } if (val === "Yes" || val === "yes") {
+        alert ('Go ahead!')
       }
     },
-
-  }
-
-
-
-
-
+    //
+    // teste2: function (val) {
+    //   this.teste = val/100;
+    //   this.teste2 = val;
+    // },
+ },
 }
+
+
+
+
 
 </script>
 

@@ -4,9 +4,6 @@
   <br>
 
 
-  <p><strong> Nombre de films dans la liste:</strong> {{ movies_length }}</p>
-  <p><strong> Nombre de films sélectionnés:</strong> {{ nombreFilm }}</p>
-
 <h1 style="font-family:Roboto,sans-serif; color:cornflowerblue">The most miaawwsome movie reviewer of the internet </h1>
   <v-container class="cont_filter">
     <v-row class="text-center">
@@ -165,21 +162,6 @@ export default {
       this.movies2 = this.movies
     }
   },
-
-
-  test_watcher: function () {
-    return this.filter_movies.length
-  },
-
-  watch: {
-    test_watcher: function (new_var, old_var) {
-      if (new_var > old_var) {
-        alert('changed')
-      }
-    },
-
-  }
-
 }
 
 
@@ -187,7 +169,7 @@ export default {
 
 <style lang="scss">
 
-$primary-color: #0c9c07;
+$primary-color: #5a1ab1;
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
